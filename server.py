@@ -8,7 +8,7 @@ import sys
 if sys.platform == "win32":
     sys.stdout.reconfigure(encoding='utf-8')
 
-PORT = 5000
+PORT = int(os.environ.get("PORT", 5000))
 
 def get_local_ip():
     try:
