@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntruderGuard AI | Wrong Password Photo Capture System</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Animated Particles & Glow -->
+    <div class="bg-glow-container">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- Alert Red Flash Overlay -->
+    <div id="alertFlash" class="alert-flash-overlay"></div>
+
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="brand-text">
+                    <h2>INTRUDER<span>GUARD</span></h2>
+                    <span class="badge-live">LIVE SECURITY</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-btn active" data-tab="tabLockscreen">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <span>Lockscreen Simulator</span>
+                </button>
+                <button class="nav-btn" data-tab="tabDashboard">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    <span>Security Dashboard</span>
+                    <span id="badgeCount" class="badge-counter">0</span>
+                </button>
+                <button class="nav-btn" data-tab="tabGallery">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    <span>Intruder Snapshots</span>
+                </button>
+                <button class="nav-btn" data-tab="tabSettings">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span>System Settings</span>
+                </button>
+            </nav>
+
+            <!-- Camera Status Box -->
+            <div class="camera-status-card">
+                <div class="cam-header">
+                    <span class="status-dot online" id="camDot"></span>
+                    <span class="cam-title" id="camStatusText">Webcam Armed</span>
+                </div>
+                <div class="cam-preview-mini">
+                    <video id="webcamVideo" autoplay playsinline muted></video>
+                    <canvas id="webcamCanvas" style="display: none;"></canvas>
+                    <div class="cam-scanline"></div>
+                </div>
+                <p class="cam-hint">Front camera captures photo automatically on wrong PIN.</p>
+            </div>
+        </aside>
+
+        <!-- Main Content View -->
+        <main class="main-content">
+            
+            <!-- TAB 1: LOCKSCREEN SIMULATOR -->
+            <section id="tabLockscreen" class="tab-content active">
+                <div class="lockscreen-card">
+                    <div class="user-avatar-container">
+                        <div class="avatar-ring">
+                            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=SecurityUser" alt="User Avatar" class="user-avatar" id="userAvatar">
+                        </div>
+                        <div class="device-time" id="lockscreenTime">12:00</div>
+                        <div class="device-date" id="lockscreenDate">Friday, July 24</div>
+                    </div>
+
+                    <h3 class="lockscreen-title">System Protected</h3>
+                    <p class="lockscreen-subtitle">Default PIN: <strong id="hintPinText">1234</strong> (Wrong PIN snaps photo!)</p>
+
+                    <!-- PIN Display Dots -->
+                    <div class="pin-dots-container" id="pinDotsBox">
+                        <span class="pin-dot"></span>
+                        <span class="pin-dot"></span>
+                        <span class="pin-dot"></span>
+                        <span class="pin-dot"></span>
+                    </div>
+
+                    <div class="lock-status-message" id="lockStatusMsg">Enter 4-Digit Security PIN</div>
+
+                    <!-- Keypad -->
+                    <div class="keypad-grid">
+                        <button class="key-btn" data-val="1">1</button>
+                        <button class="key-btn" data-val="2">2</button>
+                        <button class="key-btn" data-val="3">3</button>
+                        <button class="key-btn" data-val="4">4</button>
+                        <button class="key-btn" data-val="5">5</button>
+                        <button class="key-btn" data-val="6">6</button>
+                        <button class="key-btn" data-val="7">7</button>
+                        <button class="key-btn" data-val="8">8</button>
+                        <button class="key-btn" data-val="9">9</button>
+                        <button class="key-btn action-clear" id="keyClear">CLEAR</button>
+                        <button class="key-btn" data-val="0">0</button>
+                        <button class="key-btn action-submit" id="keySubmit">ENTER</button>
+                    </div>
+
+                    <div class="lockscreen-footer">
+                        <span>🔒 AI Intruder Trap Active</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: SECURITY DASHBOARD -->
+            <section id="tabDashboard" class="tab-content">
+                <div class="section-header">
+                    <div>
+                        <h1 class="page-title">Security Center</h1>
+                        <p class="page-subtitle">Real-time threat log & intruder attempt analytics</p>
+                    </div>
+                    <button class="btn btn-danger" id="btnClearLogs">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                        Clear All Logs
+                    </button>
+                </div>
+
+                <!-- Stats Cards Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon red">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="statIntruders">0</span>
+                            <span class="stat-label">Intruder Snapshots</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="statFailedAttempts">0</span>
+                            <span class="stat-label">Total Failed PINs</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="statLastAttempt">None</span>
+                            <span class="stat-label">Last Threat Detected</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Logs Table & Feed -->
+                <div class="dashboard-split">
+                    <div class="panel-card log-panel">
+                        <div class="panel-title">
+                            <h3>📜 Real-Time Audit Trail</h3>
+                        </div>
+                        <div class="log-stream" id="logStreamBox">
+                            <div class="log-item info">
+                                <span class="log-time">[Init]</span>
+                                <span class="log-text">IntruderGuard engine initialized. Waiting for PIN events...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: INTRUDER GALLERY -->
+            <section id="tabGallery" class="tab-content">
+                <div class="section-header">
+                    <div>
+                        <h1 class="page-title">Captured Intruder Photos</h1>
+                        <p class="page-subtitle">Snapshots automatically taken during wrong password entries</p>
+                    </div>
+                </div>
+
+                <div class="gallery-grid" id="galleryContainer">
+                    <div class="empty-gallery">
+                        <div class="empty-icon">📷</div>
+                        <h3>No Intruder Photos Captured Yet</h3>
+                        <p>Go to <strong>Lockscreen Simulator</strong> and enter a wrong PIN (e.g. 9999) to test automatic snapshot capture!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: SETTINGS -->
+            <section id="tabSettings" class="tab-content">
+                <div class="section-header">
+                    <div>
+                        <h1 class="page-title">System Settings</h1>
+                        <p class="page-subtitle">Configure security sensitivity, alarm sounds, and credentials</p>
+                    </div>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="panel-card">
+                        <h3>🔑 Master PIN Settings</h3>
+                        <div class="form-group">
+                            <label>Current Lock PIN</label>
+                            <input type="text" id="settingMasterPin" value="1234" maxlength="6" class="form-input">
+                        </div>
+                        <button class="btn btn-primary" id="btnSavePin">Save Security PIN</button>
+                    </div>
+
+                    <div class="panel-card">
+                        <h3>🔊 Sound Alarm & Visual Flash</h3>
+                        <div class="setting-row">
+                            <div>
+                                <strong>Loud Warning Siren & Beeps</strong>
+                                <p>Plays security sound on keypress & wrong password</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="toggleSound" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group" style="margin: 10px 0 15px;">
+                            <label>Siren Sound Type</label>
+                            <select id="selectSirenStyle" class="form-input">
+                                <option value="beep" selected>🚨 Rapid Warning Beeps ("Bi-Bi-Bi")</option>
+                                <option value="police">🚓 Dual-Tone Police Siren</option>
+                                <option value="cyber">⚡ Cyberpunk Synth Alarm</option>
+                            </select>
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <strong>Screen Red Warning Flash</strong>
+                                <p>Flashes red visual indicator when photo is snapped</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="toggleFlash" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <div>
+                                <strong>Auto-Save to Phone Gallery / Downloads</strong>
+                                <p>Instantly downloads photo to device storage on wrong PIN</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="toggleAutoDownload" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    <div class="panel-card">
+                        <h3>🖼️ Lockscreen Wallpaper & Theme</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">Choose pre-set wallpapers or upload custom image from phone gallery</p>
+                        
+                        <div class="wallpaper-presets-grid">
+                            <button class="wallpaper-thumb active" data-bg="default" style="background: linear-gradient(135deg, #0f172a, #1e293b);">Default</button>
+                            <button class="wallpaper-thumb" data-bg="neon" style="background: linear-gradient(135deg, #090979, #00d4ff);">Neon Blue</button>
+                            <button class="wallpaper-thumb" data-bg="cyber" style="background: linear-gradient(135deg, #4a00e0, #8e2de2);">Cyber Purple</button>
+                            <button class="wallpaper-thumb" data-bg="red" style="background: linear-gradient(135deg, #3a0007, #800020);">Blood Crimson</button>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 15px;">
+                            <label>Upload Custom Wallpaper (from Gallery/PC)</label>
+                            <input type="file" id="wallpaperUpload" accept="image/*" class="form-input">
+                        </div>
+                        <button class="btn btn-secondary" id="btnResetWallpaper">Reset Default Wallpaper</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Image Detail Modal -->
+    <div id="imageModal" class="modal-backdrop">
+        <div class="modal-content">
+            <button class="modal-close" id="btnCloseModal">&times;</button>
+            <div class="modal-body">
+                <img id="modalImg" src="" alt="Intruder Snapshot">
+                <div class="modal-details">
+                    <h3 id="modalTitle">Intruder Snapshot</h3>
+                    <p id="modalTime">Timestamp: --</p>
+                    <p id="modalPin">Attempted PIN: --</p>
+                    <a id="modalDownload" href="#" download="intruder.jpg" class="btn btn-primary" style="margin-top: 15px; display: inline-block; text-decoration: none;">📥 Download Photo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
