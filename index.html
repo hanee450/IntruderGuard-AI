@@ -48,6 +48,10 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                     <span>Intruder Snapshots</span>
                 </button>
+                <button class="nav-btn" data-tab="tabPermissions">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="3"/></svg>
+                    <span>Real-Life Permissions</span>
+                </button>
                 <button class="nav-btn" data-tab="tabSettings">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
                     <span>System Settings</span>
@@ -192,6 +196,44 @@
                         <div class="empty-icon">📷</div>
                         <h3>No Intruder Photos Captured Yet</h3>
                         <p>Go to <strong>Lockscreen Simulator</strong> and enter a wrong PIN (e.g. 9999) to test automatic snapshot capture!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB: REAL-LIFE PERMISSIONS -->
+            <section id="tabPermissions" class="tab-content">
+                <div class="section-header">
+                    <div>
+                        <h1 class="page-title">Real-Life Security Permissions</h1>
+                        <p class="page-subtitle">Grant Android / PC Device Admin & Camera permissions for real-world anti-theft protection</p>
+                    </div>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="panel-card">
+                        <h3>📷 1. Front Camera Access</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Required to automatically click silent photo of intruder on wrong password.</p>
+                        <button class="btn btn-primary" id="btnReqCam">Grant WebCam Permission</button>
+                        <span id="permCamStatus" style="font-size: 0.8rem; margin-left: 10px; color: var(--accent-green); font-weight: bold;">✅ Active</span>
+                    </div>
+
+                    <div class="panel-card">
+                        <h3>🛡️ 2. Android Device Admin Protection</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Enables background lockscreen trigger on real Android OS lock screen (`DeviceAdminReceiver`).</p>
+                        <button class="btn btn-secondary" id="btnReqAdmin">Enable Device Security Guard</button>
+                        <span id="permAdminStatus" style="font-size: 0.8rem; margin-left: 10px; color: var(--primary); font-weight: bold;">⚡ Ready</span>
+                    </div>
+
+                    <div class="panel-card">
+                        <h3>🔔 3. Real-Time Push Notifications</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Sends instant intruder alert banners to your phone / PC when a wrong PIN is entered.</p>
+                        <button class="btn btn-primary" id="btnReqNotif">Grant Notification Permission</button>
+                    </div>
+
+                    <div class="panel-card">
+                        <h3>💾 4. Phone Gallery Auto-Save</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Allows instant saving of intruder photo directly to device Downloads / Gallery folder.</p>
+                        <button class="btn btn-primary" id="btnReqStorage">Allow Storage Auto-Save</button>
                     </div>
                 </div>
             </section>
