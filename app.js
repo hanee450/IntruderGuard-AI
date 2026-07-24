@@ -22,12 +22,38 @@ document.addEventListener("DOMContentLoaded", () => {
     registerServiceWorker();
 });
 
+let deferredPrompt = null;
+
 // Register PWA Service Worker for Mobile App Installation
 function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js')
             .then(reg => console.log('Service Worker Registered for Mobile App:', reg.scope))
             .catch(err => console.warn('Service Worker Registration Failed:', err));
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const installBtn = document.getElementById('btnInstallApp');
+        if (installBtn) installBtn.style.display = 'inline-flex';
+    });
+
+    const installBtn = document.getElementById('btnInstallApp');
+    if (installBtn) {
+        installBtn.addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(choiceResult => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the PWA install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                alert("📱 TO INSTALL APP ON YOUR PHONE:\n\n1. Open browser menu (3 Dots ⋮ in Chrome or Share in Safari)\n2. Tap 'Add to Home Screen' or 'Install App'!");
+            }
+        });
     }
 }
 
