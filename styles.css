@@ -797,3 +797,69 @@ input:checked + .slider:before { transform: translateX(22px); }
     box-shadow: 0 0 12px var(--primary-glow);
 }
 
+/* Mobile Responsive Layout Fix (Fixes side-by-side overlap on smartphones) */
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .app-wrapper {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--bg-card-border);
+        padding: 16px;
+    }
+
+    .brand {
+        margin-bottom: 15px;
+    }
+
+    .nav-menu {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .nav-btn {
+        padding: 10px 12px;
+        font-size: 0.82rem;
+        justify-content: center;
+    }
+
+    .camera-status-card {
+        display: none; /* Hide sidebar camera preview on mobile to give 100% space to Lockscreen */
+    }
+
+    .main-content {
+        padding: 16px 10px;
+        width: 100%;
+    }
+
+    .lockscreen-card {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 24px 16px;
+        border-radius: 20px;
+    }
+
+    .device-time {
+        font-size: 1.8rem;
+    }
+
+    .keypad-grid {
+        max-width: 280px;
+        gap: 10px;
+    }
+
+    .key-btn {
+        height: 52px;
+        font-size: 1.2rem;
+    }
+}
+
