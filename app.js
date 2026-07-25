@@ -321,7 +321,9 @@ function autoDownloadToGallery(dataUrl, wrongPin) {
         link.download = filename;
         document.body.appendChild(link);
         link.click();
-        document.body.removeChild(link);
+        setTimeout(() => {
+            document.body.removeChild(link);
+        }, 200);
     } catch (err) {
         console.warn("Auto download failed:", err);
     }
