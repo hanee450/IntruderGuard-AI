@@ -797,10 +797,37 @@ input:checked + .slider:before { transform: translateX(22px); }
     box-shadow: 0 0 12px var(--primary-glow);
 }
 
-/* Mobile Responsive Layout Fix (Fixes side-by-side overlap on smartphones) */
+/* Keypad & Button Smooth Tactile Animations */
+.key-btn {
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.key-btn:active {
+    transform: scale(0.92) translateY(2px);
+    background: rgba(59, 130, 246, 0.3) !important;
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.nav-btn {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-btn.active {
+    transform: scale(1.02);
+}
+
+.lockscreen-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+/* Mobile Ultra-Smooth Responsive Layout with Bottom App Bar */
 @media (max-width: 768px) {
     body {
         overflow-y: auto;
+        padding-bottom: 70px; /* Space for Mobile Bottom Nav Bar */
     }
 
     .app-wrapper {
@@ -813,53 +840,63 @@ input:checked + .slider:before { transform: translateX(22px); }
         width: 100%;
         border-right: none;
         border-bottom: 1px solid var(--bg-card-border);
-        padding: 16px;
+        padding: 12px 16px;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(20px);
     }
 
     .brand {
-        margin-bottom: 15px;
-    }
-
-    .nav-menu {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
-
-    .nav-btn {
-        padding: 10px 12px;
-        font-size: 0.82rem;
+        margin-bottom: 10px;
         justify-content: center;
     }
 
+    .nav-menu {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        gap: 8px;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-btn {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        border-radius: 20px;
+        flex-shrink: 0;
+    }
+
     .camera-status-card {
-        display: none; /* Hide sidebar camera preview on mobile to give 100% space to Lockscreen */
+        display: none;
     }
 
     .main-content {
-        padding: 16px 10px;
+        padding: 16px 12px;
         width: 100%;
     }
 
     .lockscreen-card {
         max-width: 100%;
         margin: 0 auto;
-        padding: 24px 16px;
-        border-radius: 20px;
+        padding: 28px 18px;
+        border-radius: 24px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
     }
 
     .device-time {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
     }
 
     .keypad-grid {
-        max-width: 280px;
-        gap: 10px;
+        max-width: 300px;
+        gap: 12px;
     }
 
     .key-btn {
-        height: 52px;
-        font-size: 1.2rem;
+        height: 56px;
+        font-size: 1.3rem;
+        border-radius: 18px;
     }
 }
 
