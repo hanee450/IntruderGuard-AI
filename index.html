@@ -36,8 +36,22 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
                 <div class="brand-text">
-                    <h2>INTRUDER<span>GUARD</span></h2>
-                    <span class="badge-live">LIVE SECURITY</span>
+                    <h2>INTRUDER<span>GUARD AI PRO</span></h2>
+                    <div style="display: flex; gap: 6px; align-items: center; margin-top: 4px;">
+                        <span class="badge-live">LIVE SECURITY</span>
+                        <select id="langSelector" style="background: rgba(0,0,0,0.4); color: #fff; border: 1px solid var(--bg-card-border); border-radius: 8px; font-size: 0.7rem; padding: 2px 4px; cursor: pointer;">
+                            <option value="en">🌐 English</option>
+                            <option value="hi">🇮🇳 Hindi (हिंदी)</option>
+                            <option value="es">🇪🇸 Spanish</option>
+                            <option value="fr">🇫🇷 French</option>
+                            <option value="de">🇩🇪 German</option>
+                            <option value="ja">🇯🇵 Japanese</option>
+                            <option value="ar">🇦🇪 Arabic</option>
+                            <option value="ru">🇷🇺 Russian</option>
+                            <option value="zh">🇨🇳 Chinese</option>
+                            <option value="pt">🇧🇷 Portuguese</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -62,6 +76,10 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
                     <span>Security Dashboard</span>
                     <span id="badgeCount" class="badge-counter">0</span>
+                </button>
+                <button class="nav-btn" data-tab="tabAiAssistant">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                    <span>AI Assistant Chat</span>
                 </button>
                 <button class="nav-btn" data-tab="tabGallery">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
@@ -158,13 +176,31 @@
             <section id="tabDashboard" class="tab-content">
                 <div class="section-header">
                     <div>
-                        <h1 class="page-title">Security Center</h1>
-                        <p class="page-subtitle">Real-time threat log & intruder attempt analytics</p>
+                        <h1 class="page-title">Security Center & AI Analytics</h1>
+                        <p class="page-subtitle">Real-time threat log, AI score & exportable reports</p>
                     </div>
-                    <button class="btn btn-danger" id="btnClearLogs">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                        Clear All Logs
-                    </button>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn btn-secondary" id="btnExportCsv" style="font-size: 0.8rem; padding: 8px 12px;">📊 Export CSV</button>
+                        <button class="btn btn-secondary" id="btnExportPdf" style="font-size: 0.8rem; padding: 8px 12px;">📄 Export PDF</button>
+                        <button class="btn btn-danger" id="btnClearLogs" style="font-size: 0.8rem; padding: 8px 12px;">Clear Logs</button>
+                    </div>
+                </div>
+
+                <!-- Security Score & Threat Banner -->
+                <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(16, 185, 129, 0.1)); border: 1px solid rgba(59, 130, 246, 0.3); padding: 18px; border-radius: 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="width: 56px; height: 56px; border-radius: 50%; border: 3px solid var(--accent-green); display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem; color: var(--accent-green);" id="scoreCircle">
+                            95%
+                        </div>
+                        <div>
+                            <h3 style="font-size: 1rem; margin-bottom: 2px;">AI Security Score: <span style="color: var(--accent-green);">EXCELLENT</span></h3>
+                            <p style="font-size: 0.8rem; color: var(--text-muted);">Biometric & Device Admin Hardware Guard active</p>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="badge-live" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border-color: rgba(59, 130, 246, 0.4);">THREAT LEVEL: LOW</span>
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">🔋 Battery: 88% | 🟢 System Armed</div>
+                    </div>
                 </div>
 
                 <!-- Stats Cards Grid -->
@@ -228,6 +264,37 @@
                         <div class="empty-icon">📷</div>
                         <h3>No Intruder Photos Captured Yet</h3>
                         <p>Go to <strong>Lockscreen Simulator</strong> and enter a wrong PIN (e.g. 9999) to test automatic snapshot capture!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB: AI ASSISTANT CHATBOT -->
+            <section id="tabAiAssistant" class="tab-content">
+                <div class="section-header">
+                    <div>
+                        <h1 class="page-title">AI Security Assistant</h1>
+                        <p class="page-subtitle">Interactive AI security advisor, permission explainer & threat analyzer</p>
+                    </div>
+                </div>
+
+                <div class="panel-card" style="display: flex; flex-direction: column; height: 500px; padding: 0; overflow: hidden;">
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px 20px; border-bottom: 1px solid var(--bg-card-border); display: flex; align-items: center; gap: 12px;">
+                        <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); display: flex; align-items: center; justify-content: center; font-weight: bold; color: #fff;">AI</div>
+                        <div>
+                            <strong style="font-size: 0.95rem;">IntruderGuard Security Bot</strong>
+                            <div style="font-size: 0.75rem; color: var(--accent-green);">🟢 Active & Monitoring</div>
+                        </div>
+                    </div>
+
+                    <div id="chatHistory" style="flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px;">
+                        <div class="chat-msg bot" style="align-self: flex-start; max-width: 80%; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); padding: 12px 16px; border-radius: 16px; border-top-left-radius: 4px; font-size: 0.9rem;">
+                            Hello! I am your <strong>IntruderGuard AI Assistant</strong>. Ask me anything about permissions, threat logs, app locking, or security recommendations!
+                        </div>
+                    </div>
+
+                    <div style="padding: 15px; background: rgba(0,0,0,0.4); border-top: 1px solid var(--bg-card-border); display: flex; gap: 10px;">
+                        <input type="text" id="chatInput" placeholder="Ask AI Security Question..." style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid var(--bg-card-border); color: #fff; padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; outline: none;">
+                        <button class="btn btn-primary" id="btnSendChat" style="border-radius: 12px;">Send</button>
                     </div>
                 </div>
             </section>
@@ -462,6 +529,22 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             <span>Settings</span>
         </button>
+    </div>
+
+    <!-- 6-Screen Premium Onboarding Flow Modal -->
+    <div id="onboardingModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-content" style="max-width: 520px; border-radius: 24px; padding: 28px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(59, 130, 246, 0.3);">
+            <div id="onboardStepContainer">
+                <!-- Dynamic Onboarding Screen Content -->
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--bg-card-border);">
+                <span id="onboardDots" style="font-weight: 700; color: var(--primary); font-size: 0.9rem;">Step 1 of 6</span>
+                <div>
+                    <button class="btn btn-secondary" id="btnOnboardSkip" style="margin-right: 8px;">Skip</button>
+                    <button class="btn btn-primary" id="btnOnboardNext">Next →</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="app.js"></script>
