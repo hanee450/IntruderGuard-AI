@@ -315,7 +315,6 @@
                         <button class="btn btn-primary" id="btnReqCam">Grant WebCam Permission</button>
                         <span id="permCamStatus" style="font-size: 0.8rem; margin-left: 10px; color: var(--accent-green); font-weight: bold;">✅ Active</span>
                     </div>
-
                     <div class="panel-card">
                         <h3>🛡️ 2. Android Device Admin Protection</h3>
                         <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Enables background lockscreen trigger on real Android OS lock screen (`DeviceAdminReceiver`).</p>
@@ -330,9 +329,16 @@
                     </div>
 
                     <div class="panel-card">
-                        <h3>💾 4. Phone Gallery Auto-Save</h3>
-                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Allows instant saving of intruder photo directly to device Downloads / Gallery folder.</p>
-                        <button class="btn btn-primary" id="btnReqStorage">Allow Storage Auto-Save</button>
+                        <h3>💾 4. Gallery Auto-Save Storage</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Automatically saves captured intruder photos directly into device Downloads / Gallery folder.</p>
+                        <button class="btn btn-secondary" id="btnReqStorage">Enable Auto-Save to Gallery</button>
+                    </div>
+
+                    <div class="panel-card" style="grid-column: 1 / -1;">
+                        <h3>🔐 5. Accessibility & Usage Permission (App Lock)</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Enables automatic App Lock popup whenever WhatsApp, Phone Gallery, or Instagram is opened on your Android phone.</p>
+                        <button class="btn btn-primary" id="btnReqAppLockPerm">Grant App Lock Permission</button>
+                        <span id="permAppLockStatus" style="font-size: 0.8rem; margin-left: 10px; color: var(--accent-green); font-weight: bold; display: none;">🟢 Active</span>
                     </div>
                 </div>
             </section>
