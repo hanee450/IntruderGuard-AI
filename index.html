@@ -61,6 +61,10 @@
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                     <span>Intruder Snapshots</span>
                 </button>
+                <button class="nav-btn" data-tab="tabAppLock">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg>
+                    <span>App Lock Protection</span>
+                </button>
                 <button class="nav-btn" data-tab="tabPermissions">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="3"/></svg>
                     <span>Real-Life Permissions</span>
@@ -209,6 +213,73 @@
                         <div class="empty-icon">📷</div>
                         <h3>No Intruder Photos Captured Yet</h3>
                         <p>Go to <strong>Lockscreen Simulator</strong> and enter a wrong PIN (e.g. 9999) to test automatic snapshot capture!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB: APP LOCK SUITE -->
+            <section id="tabAppLock" class="tab-content">
+                <div class="section-header">
+                    <div>
+                        <h1 class="page-title">App Lock Security Suite</h1>
+                        <p class="page-subtitle">Protect private apps (WhatsApp, Gallery, Instagram) with wrong password intruder photo capture</p>
+                    </div>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="panel-card" style="grid-column: 1 / -1;">
+                        <h3>🔐 Select Apps to Protect</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Whenever an unauthorized person opens these locked apps and enters a wrong PIN, their photo is clicked automatically!</p>
+                        
+                        <div class="app-lock-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
+                            <div class="app-lock-item" style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 14px; border: 1px solid var(--bg-card-border); display: flex; align-items: center; justify-content: space-between;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <span style="font-size: 1.5rem;">💬</span>
+                                    <strong>WhatsApp</strong>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="app-lock-item" style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 14px; border: 1px solid var(--bg-card-border); display: flex; align-items: center; justify-content: space-between;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <span style="font-size: 1.5rem;">🖼️</span>
+                                    <strong>Phone Gallery</strong>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="app-lock-item" style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 14px; border: 1px solid var(--bg-card-border); display: flex; align-items: center; justify-content: space-between;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <span style="font-size: 1.5rem;">📸</span>
+                                    <strong>Instagram</strong>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="app-lock-item" style="background: rgba(0,0,0,0.3); padding: 14px; border-radius: 14px; border: 1px solid var(--bg-card-border); display: flex; align-items: center; justify-content: space-between;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <span style="font-size: 1.5rem;">💳</span>
+                                    <strong>PayTM / UPI</strong>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 25px;">
+                            <button class="btn btn-primary" id="btnTestAppLock">Test WhatsApp Lock Screen</button>
+                        </div>
                     </div>
                 </div>
             </section>

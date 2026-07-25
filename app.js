@@ -526,10 +526,21 @@ function setupSettings() {
         });
     }
 
-    document.getElementById("btnTestAlarm").addEventListener("click", () => {
-        playSecuritySiren();
-        triggerRedFlash();
-    });
+    const btnTestAppLock = document.getElementById("btnTestAppLock");
+    if (btnTestAppLock) {
+        btnTestAppLock.addEventListener("click", () => {
+            document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+            document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+
+            const lockBtn = document.querySelector(".nav-btn[data-tab='tabLockscreen']");
+            if (lockBtn) lockBtn.classList.add("active");
+            document.getElementById("tabLockscreen").classList.add("active");
+
+            const title = document.querySelector(".lockscreen-title");
+            if (title) title.innerText = "💬 WhatsApp Locked";
+            addAuditLog("WhatsApp App Lock simulated.", "info");
+        });
+    }
 
     setupWallpaperHandlers();
     setupPermissionsManager();
