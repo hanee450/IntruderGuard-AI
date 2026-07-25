@@ -133,8 +133,17 @@
                         <button class="key-btn action-submit" id="keySubmit">ENTER</button>
                     </div>
 
-                    <div class="lockscreen-footer">
+                    <!-- Fingerprint & Biometric Button -->
+                    <div style="margin: 15px 0;">
+                        <button class="btn btn-secondary" id="btnFingerprint" style="width: 100%; max-width: 300px; border-radius: 16px; padding: 12px; justify-content: center; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); color: #fff;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 11c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/><path d="M12 2a10 10 0 0 0-10 10c0 4.42 2.87 8.17 6.84 9.5.42.14.73.53.73.97v.53c0 .55.45 1 1 1h2.86c.55 0 1-.45 1-1v-.53c0-.44.31-.83.73-.97C19.13 20.17 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+                            <span>🖐️ Scan Fingerprint (Biometric)</span>
+                        </button>
+                    </div>
+
+                    <div class="lockscreen-footer" style="display: flex; justify-content: space-between; align-items: center; padding-top: 15px;">
                         <span>🔒 AI Intruder Trap Active</span>
+                        <button id="btnQuickChangePin" style="background: none; border: none; color: var(--primary); font-size: 0.8rem; cursor: pointer; font-weight: 600;">⚙️ Change PIN</button>
                     </div>
                 </div>
             </section>

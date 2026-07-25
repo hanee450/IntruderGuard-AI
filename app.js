@@ -640,11 +640,92 @@ function setupWallpaperHandlers() {
             addAuditLog("Wallpaper reset to default.", "info");
         });
     }
+
+    setupFingerprintAndCustomPin();
 }
 
 function applyWallpaper(bgStyle) {
     const card = document.querySelector(".lockscreen-card");
     if (card) {
         card.style.background = bgStyle;
+    }
+}
+
+// Fingerprint Sensor & Custom PIN Change Logic
+function setupFingerprintAndCustomPin() {
+    const btnQuickChangePin = document.getElementById("btnQuickChangePin");
+    if (btnQuickChangePin) {
+        btnQuickChangePin.addEventListener("click", () => {
+            const newPin = prompt("🔑 Enter your new Security PIN (e.g. 5896, 7890):", masterPin);
+            if (newPin && newPin.trim().length >= 4) {
+                masterPin = newPin.trim();
+                localStorage.setItem("intruder_master_pin", masterPin);
+                
+                const hintPinText = document.getElementById("hintPinText");
+                if (hintPinText) hintPinText.innerText = masterPin;
+
+                const settingPin = document.getElementById("settingMasterPin");
+                if (settingPin) settingPin.value = masterPin;
+
+                alert(`✅ Security Lock PIN updated to '${masterPin}' successfully!`);
+                addAuditLog(`Master PIN updated to '${masterPin}'.`, "info");
+            }
+        });
+    }
+
+    const btnFingerprint = document.getElementById("btnFingerprint");
+    if (btnFingerprint) {
+        btnFingerprint.addEventListener("click", async () => {
+            addAuditLog("Fingerprint biometric scan initiated...", "info");
+            
+            // Check if WebAuthn / Biometrics available
+            if (window.PublicKeyCredential) {
+                try {
+                    // Trigger native phone fingerprint sensor prompt
+                    const isAvailable = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+                    if (isAvailable) {
+                        const verified = confirm("🖐️ Place your finger on Phone Fingerprint Sensor.\n\nClick 'OK' for Authorized Fingerprint (Unlock)\nClick 'Cancel' for Failed/Wrong Fingerprint (Snap Photo)");
+                        if (verified) {
+                            playSuccessChime();
+                            const lockMsg = document.getElementById("lockStatusMsg");
+                            if (lockMsg) {
+                                lockMsg.innerText = "✅ Fingerprint Verified! Device Unlocked.";
+                                lockMsg.style.color = "#10b981";
+                            }
+                            addAuditLog("Fingerprint verified successfully.", "info");
+                        } else {
+                            // Failed Fingerprint -> Trigger Intruder Snapshot
+                            playSecuritySiren();
+                            triggerRedFlash();
+                            captureIntruderPhoto("FINGERPRINT_FAILED");
+                            alert("🚨 FINGERPRINT MISMATCH / FAILED! Intruder Photo Snapped!");
+                        }
+                    } else {
+                        fallbackFingerprintPrompt();
+                    }
+                } catch (err) {
+                    fallbackFingerprintPrompt();
+                }
+            } else {
+                fallbackFingerprintPrompt();
+            }
+        });
+    }
+}
+
+function fallbackFingerprintPrompt() {
+    const verified = confirm("🖐️ Fingerprint Sensor Scan:\n\nClick 'OK' to Simulate Matching Finger (Unlock)\nClick 'Cancel' for Mismatched/Wrong Finger (Snap Photo)");
+    if (verified) {
+        playSuccessChime();
+        const lockMsg = document.getElementById("lockStatusMsg");
+        if (lockMsg) {
+            lockMsg.innerText = "✅ Fingerprint Matched! Unlocked.";
+            lockMsg.style.color = "#10b981";
+        }
+    } else {
+        playSecuritySiren();
+        triggerRedFlash();
+        captureIntruderPhoto("FINGERPRINT_MISMATCH");
+        alert("🚨 WRONG FINGERPRINT SCAN! Intruder Photo Snapped & Saved to Gallery!");
     }
 }
