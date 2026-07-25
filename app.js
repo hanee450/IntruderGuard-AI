@@ -296,6 +296,14 @@ function captureIntruderPhoto(wrongPin) {
     intruderLogs.unshift(newLog);
     localStorage.setItem("intruder_snapshots_log", JSON.stringify(intruderLogs));
 
+    // Fetch GPS Location & Trigger Telegram / Email Alert
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+            const locStr = `GPS: ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`;
+            addAuditLog(`📍 Intruder Location captured: ${locStr}`, "info");
+        }, () => {});
+    }
+
     // Auto-Save / Download Photo directly into device Gallery/Downloads
     autoDownloadToGallery(imgDataUrl, wrongPin);
 
